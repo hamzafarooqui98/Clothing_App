@@ -7,10 +7,38 @@ import ShopPage from './pages/shop/shop.component';
 import Header from './components/header/header.component';
 import SignInAndSignUpPage from './pages/sign-in-and-sign-up/sign-in-and-sign-up.component';
 
-function App() {
+import { auth } from './firebase/firebase.utils';
+
+class App extends React.Component{
+  constructor(){
+    super();
+
+    this.state = {
+      currentUser : null
+    }
+  }
+
+  unsubscribeFromAuth = null;  //Since we also need to close the subscription
+
+  componentDidMount(){
+    this.unsubscribeFromAuth = auth.onAuthStateChanged( user => {  // auth.onAuthStateChanged() is an open subscription
+      this.setState({ currentUser : user });
+      console.log(user);
+    })
+  }
+
+  componentWillUnmount(){
+    this.unsubscribeFromAuth();
+  }
+
+  /*In ComponentDidMount we use fetch(), which is used once, but to use it again ComponentDidMount would 
+  have to be recalled means the whole app component will be re-rendered( which we don't want )
+  we just want to be aware that if somebaody leaves or sign-ins it renders that change only (and firebase gives us that feature)*/
+
+  render(){
   return (
     <div>
-      <Header  />
+      <Header currentUser={this.state.currentUser} />
       <Switch>
         <Route exact path='/' component={HomePage} />
         <Route exact path='/shop' component={ShopPage} />
@@ -18,6 +46,7 @@ function App() {
       </Switch>
     </div>
   );
+}
 }
 
 export default App;
