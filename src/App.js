@@ -7,7 +7,7 @@ import ShopPage from './pages/shop/shop.component';
 import Header from './components/header/header.component';
 import SignInAndSignUpPage from './pages/sign-in-and-sign-up/sign-in-and-sign-up.component';
 
-import { auth } from './firebase/firebase.utils';
+import { auth, createUserProfileDocument } from './firebase/firebase.utils';
 
 class App extends React.Component{
   constructor(){
@@ -21,9 +21,24 @@ class App extends React.Component{
   unsubscribeFromAuth = null;  //Since we also need to close the subscription
 
   componentDidMount(){
-    this.unsubscribeFromAuth = auth.onAuthStateChanged( user => {  // auth.onAuthStateChanged() is an open subscription
-      this.setState({ currentUser : user });
-      console.log(user);
+    this.unsubscribeFromAuth = auth.onAuthStateChanged( async userAuth => {  // auth.onAuthStateChanged() is an open subscription
+      if ( userAuth ){
+        const userRef = await createUserProfileDocument(userAuth);  
+
+        userRef.onSnapshot( snapShot => {  //we get the user object that we saved in the database through this snapShot object
+          this.setState({                 //we still not got any user data until we use .data() method
+            currentUser : {
+              id : snapShot.id,          //since id does not comes with .data() method
+              ...snapShot.data()
+            }
+          });
+          console.log(this.state);
+        });
+      }
+      else {
+        this.setState({ currentUser : userAuth });  //here the user will be null as he has not signed-in
+      }    
+
     })
   }
 
