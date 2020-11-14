@@ -4,7 +4,8 @@ const INITIAL_STATE = {
     currentUser : null
 }
 
-const userReducer = ( state = INITIAL_STATE, action ) => {  //state default value is set (if no value is passed to it)
+const userReducer = ( state = INITIAL_STATE, action ) => { 
+    console.log(state); //state default value is set (if no value is passed to it)
     switch (action.type){
 
         case (UserActionTypes.SET_CURRENT_USER) : 

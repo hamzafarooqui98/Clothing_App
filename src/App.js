@@ -63,7 +63,7 @@ class App extends React.Component{
 }
 }
 
-const mapStateToProps = ({ user }) => ({
+const mapStateToProps = ({ user }) => ({  //We are getting the state since we want the routing to homepage when the user signs-in
   currentUser : user.currentUser
 });
 
