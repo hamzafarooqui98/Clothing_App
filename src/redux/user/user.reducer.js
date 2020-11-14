@@ -1,3 +1,5 @@
+import { UserActionTypes } from './user.types';
+
 const INITIAL_STATE = {
     currentUser : null
 }
@@ -5,7 +7,7 @@ const INITIAL_STATE = {
 const userReducer = ( state = INITIAL_STATE, action ) => {  //state default value is set (if no value is passed to it)
     switch (action.type){
 
-        case 'SET_CURRENT_USER' : 
+        case (UserActionTypes.SET_CURRENT_USER) : 
         return{
             ...state,
             currentUser : action.payload
