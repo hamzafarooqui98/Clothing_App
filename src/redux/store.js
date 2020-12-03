@@ -9,7 +9,7 @@ import rootReducer from './root-reducer';
 // const middlewares = [logger];  //we may want to modify it later thats why we have putted in a array which is used below
 
 const middlewares = [];
-if (process.env.NODE_ENV == 'development'){  //If u hover over NODE_ENV u will see that it has  3 options. So if in development mode(like in localhost) logger will be pushed to the array which will be applied to applyMiddleware fn
+if (process.env.NODE_ENV === 'development'){  //If u hover over NODE_ENV u will see that it has  3 options. So if in development mode(like in localhost) logger will be pushed to the array which will be applied to applyMiddleware fn
     middlewares.push(logger);      
 }
 
