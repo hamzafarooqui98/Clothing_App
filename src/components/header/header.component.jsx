@@ -1,5 +1,4 @@
 import React from 'react';
-import './header.styles.scss';
 import { HeaderContainer, LogoContainer, OptionsContainer, OptionLink } from './header.styles';
 
 // import { Link } from 'react-router-dom';
